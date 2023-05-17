@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { addTodo, removeTodo, loadTodos, updateTodo } from './state/todos/todo.actions';
-import { Observable } from 'rxjs';
-import { selectAllTodos } from './state/todos/todo.selectors';
-import { AppState } from './state/app.state';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Todo } from './state/todo.model';
 import { faTrash, faTrashArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { TodoService } from './services/todo.service';
 
 
 @Component({
@@ -19,10 +15,10 @@ export class AppComponent implements OnInit{
   faTrash = faTrash;
   faTrashArrowUp = faTrashArrowUp;
 
-  allTodos$: Observable<Todo[]> = this.store.select(selectAllTodos);
+  todos: WritableSignal<Todo[]> = signal([]);
   form!: FormGroup;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private _service: TodoService) {}
 
   ngOnInit(): void {
     document.addEventListener("DOMContentLoaded", function () {
@@ -30,7 +26,10 @@ export class AppComponent implements OnInit{
       contentElement.classList.add("grow-animation");
     });
 
-    this.store.dispatch(loadTodos());
+    this._service.getTodos().subscribe(todos => {
+      this.todos.set(todos);
+    });
+
     this.form = new FormGroup({
       content: new FormControl('', [Validators.maxLength(30)])
     })
@@ -39,16 +38,26 @@ export class AppComponent implements OnInit{
   addTodo() {
     if (this.form.invalid) return;
     if(this.form.value.content.length == '') return;
-    this.store.dispatch(addTodo({ content: this.form.value.content }));
+    const newTodo: Todo = {id: Date.now().toString(), text: this.form.value.content, completed: false};
+    this.todos.update(todos => [...todos, newTodo]);
+    this._service.saveTodos(this.todos());
     this.form.reset();
   }
 
   removeTodo(todo: Todo) {
-    this.store.dispatch(removeTodo({ id: todo.id }));
+    this.todos.update(todos => todos.filter(t => t.id !== todo.id));
+    this._service.saveTodos(this.todos());
   }
 
   updateTodo(todo: Todo) {
-    this.store.dispatch(updateTodo({ id: todo.id, completed: !todo.completed }));
+    this.todos.update(todos => todos.map(todoItem => {
+      if(todoItem.id === todo.id) {
+        return {...todoItem, completed: !todoItem.completed};
+      } else {
+        return todoItem;
+      }
+    }));
+    this._service.saveTodos(this.todos());
   }
 }
 
