@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, effect, Injector, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Todo } from './state/todo.model';
 import { faTrash, faTrashArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -18,7 +18,9 @@ export class AppComponent implements OnInit{
   todos: WritableSignal<Todo[]> = signal([]);
   form!: FormGroup;
 
-  constructor(private _service: TodoService) {}
+  constructor(private _service: TodoService, private injector: Injector) {
+    this.todos.set(this._service.getTodos());
+  }
 
   ngOnInit(): void {
     document.addEventListener("DOMContentLoaded", function () {
@@ -26,38 +28,35 @@ export class AppComponent implements OnInit{
       contentElement.classList.add("grow-animation");
     });
 
-    this._service.getTodos().subscribe(todos => {
-      this.todos.set(todos);
-    });
-
     this.form = new FormGroup({
       content: new FormControl('', [Validators.maxLength(30)])
     })
+
+    effect(() => {
+      this._service.saveTodos(this.todos());
+    }, {injector: this.injector});
   }
 
   addTodo() {
     if (this.form.invalid) return;
     if(this.form.value.content.length == '') return;
     const newTodo: Todo = {id: Date.now().toString(), text: this.form.value.content, completed: false};
-    this.todos.update(todos => [...todos, newTodo]);
-    this._service.saveTodos(this.todos());
+    this.todos.mutate(todos => todos.push(newTodo));
     this.form.reset();
   }
 
   removeTodo(todo: Todo) {
     this.todos.update(todos => todos.filter(t => t.id !== todo.id));
-    this._service.saveTodos(this.todos());
   }
 
   updateTodo(todo: Todo) {
-    this.todos.update(todos => todos.map(todoItem => {
+    this.todos.mutate(todos => todos.map(todoItem => {
       if(todoItem.id === todo.id) {
         return {...todoItem, completed: !todoItem.completed};
       } else {
         return todoItem;
       }
     }));
-    this._service.saveTodos(this.todos());
   }
 }
 

@@ -7,18 +7,18 @@ export class TodoService {
     constructor(
     ) {}
 
-    getTodos(): Observable<Todo[]> {
+    getTodos(): Todo[] {
         const todosData = localStorage.getItem('todos');
         if(todosData) {
             const todos: Todo[] = JSON.parse(todosData);
-            return of(todos);
+            return todos;
         } else {
-            return of([]);
+            return [];
         }
     }
 
-    saveTodos(todos: Todo[]): Observable<void> {
+    saveTodos(todos: Todo[]): Todo[] {
         localStorage.setItem('todos', JSON.stringify(todos));
-        return of();
+        return todos;
     }
 }
