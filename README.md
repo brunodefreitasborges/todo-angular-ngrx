@@ -1,27 +1,21 @@
-# TodoAngularNgrx
+# State Management in Angular - Todo App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.5.
+POC das diferentes maneiras que podemos trabalhar com gerenciamento de estado em aplicações Angular.
 
-## Development server
+A branch master apresenta o app básico - uma lista de todos que inicia com apenas um objeto para mostrar em tela. Há um serviço que implementa a lógica de persistência dos dos dados no local storage, porém não há ligação entre este serviço e o componente. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## NgRx Store
 
-## Code scaffolding
+Na branch ngrx-store foi implementado a chamada store global, que consiste de um AppState cujo único estado é o TodoState. 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Este approach utiliza todo o poder do NgRx para controle total sobre o estado da aplicação, separando as responsabilidades em actions, reducers, selectors e effects.
 
-## Build
+## NgRx Component Store
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Na branch ngrx-component-store está a implementação da Component Store - que consiste em um único arquivo TS que executa as todas as mudanças de estado da aplicação.
 
-## Running unit tests
+## Signals
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Já na Branch signals temos uma implementação da nova maneira de gerenciar estado, lançada no Angular 16 - um jeito muito simples de tratar com um problema antigo.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
