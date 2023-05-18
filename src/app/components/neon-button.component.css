@@ -2,30 +2,25 @@ a{
     position: relative;
     display: inline-block;
     padding: 25px 30px;
-    color: brown;
+    color: blue;
     text-decoration: none;
     text-transform: uppercase;
     transition: 0.5s;
     letter-spacing: 4px;
-    overflow: hidden;   
+    overflow: hidden;
     font-family: 'Space Mono', monospace;
     font-size: 18px;
 }
 a:hover{
-    background: brown;
+    background: blue;
     color: white;
-    box-shadow: 0 0 5px brown,
-                0 0 25px brown,
-                0 0 50px brown,
-                0 0 200px brown;
+    box-shadow: 0 0 5px blue,
+                0 0 25px blue,
+                0 0 50px blue,
+                0 0 200px blue;
      -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
 }
-a:nth-child(1){
-    filter: hue-rotate(270deg);
-}
-a:nth-child(2){
-    filter: hue-rotate(110deg);
-}
+
 a span{
     position: absolute;
     display: block;
@@ -35,7 +30,7 @@ a span:nth-child(1){
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg,transparent,brown);
+    background: linear-gradient(90deg,transparent,blue);
     animation: animate1 1s linear infinite;
 }
 @keyframes animate1{
@@ -51,7 +46,7 @@ a span:nth-child(2){
     right: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(180deg,transparent,brown);
+    background: linear-gradient(180deg,transparent,blue);
     animation: animate2 1s linear infinite;
     animation-delay: 0.25s;
 }
@@ -68,7 +63,7 @@ a span:nth-child(3){
     right: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(270deg,transparent,brown);
+    background: linear-gradient(270deg,transparent,blue);
     animation: animate3 1s linear infinite;
     animation-delay: 0.50s;
 }
@@ -87,7 +82,7 @@ a span:nth-child(4){
     left: 0;
     width: 2px;
     height: 100%;
-    background: linear-gradient(360deg,transparent,brown);
+    background: linear-gradient(360deg,transparent,blue);
     animation: animate4 1s linear infinite;
     animation-delay: 0.75s;
 }

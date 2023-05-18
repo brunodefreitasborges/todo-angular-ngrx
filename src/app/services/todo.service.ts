@@ -18,6 +18,7 @@ export class TodoService {
     }
 
     saveTodos(todos: Todo[]): Todo[] {
+      console.log('Todos Changed. Saving todos.')
         localStorage.setItem('todos', JSON.stringify(todos));
         return todos;
     }

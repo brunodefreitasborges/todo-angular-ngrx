@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { TodoService } from './services/todo.service';
 import { NeonButtonComponent } from './components/neon-button.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TodoSignals } from './state/todo.signals';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     FontAwesomeModule,
   ],
   providers: [
-    TodoService
+    TodoService,
+    TodoSignals
   ],
   bootstrap: [AppComponent]
 })
