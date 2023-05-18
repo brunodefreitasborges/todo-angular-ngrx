@@ -18,4 +18,6 @@ Na branch ngrx-component-store está a implementação da Component Store - que 
 
 Já na Branch signals temos uma implementação da nova maneira de gerenciar estado, lançada no Angular 16 - um jeito muito simples de tratar com um problema antigo.
 
+Extraí a lógica do signal para um serviço, a fim de demonstrar como esta nova feature pode tomar o lugar de um gerenciamento de estado via store.
+
 
