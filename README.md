@@ -20,4 +20,21 @@ Já na Branch signals temos uma implementação da nova maneira de gerenciar est
 
 Extraí a lógica do signal para um serviço, a fim de demonstrar como esta nova feature pode tomar o lugar de um gerenciamento de estado via store.
 
+## How to Run
+1 - Clone o repositório
+```
+git clone https://github.com/brunodefreitasborges/todo-angular-state-management.git
+```
+
+2 - Dentro da pasta, instale as dependências
+
+```
+npm install
+```
+
+3 - Sirva a applicação utilizando o Angular CLI
+
+```
+ng serve
+```
 
